@@ -1,0 +1,17 @@
+name: "Deploy to GitHub Codespaces"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Codespace setup info
+        run: |
+          echo "## 🚀 GitHub Codespaces Setup" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "1. Go to https://github.com/KRYZENSYS/recon-platform" >> $GITHUB_STEP_SUMMARY
+          echo "2. Click green 'Code' button" >> $GITHUB_STEP_SUMMARY
+          echo "3. Select 'Codespaces' tab" >> $GITHUB_STEP_SUMMARY
+          echo "4. Click 'Create codespace on main'" >> $GITHUB_STEP_SUMMARY
