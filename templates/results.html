@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+{% block title %}Scan #{{ scan.id }} — Recon Platform{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="h3 mb-1"><i class="bi bi-search"></i> Scan #{{ scan.id }}</h1>
+        <code class="text-info">{{ scan.target }}</code>
+    </div>
+    <div>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back
+        </a>
+    </div>
+</div>
+
+<div id="status-card" class="card bg-secondary-subtle border-secondary mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1">Status: <span id="status-badge"></span></h5>
+                <small class="text-muted">Created: {{ scan.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+            </div>
+            <div>
+                <span id="duration-info" class="text-muted"></span>
+            </div>
+        </div>
+        <div id="progress" class="progress mt-3" style="height: 5px; display: none;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width: 100%"></div>
+        </div>
+    </div>
+</div>
+
+<ul class="nav nav-tabs mb-3" id="resultTabs" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tab-spider">
+            <i class="bi bi-diagram-3"></i> Spider
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-dns">
+            <i class="bi bi-hdd-network"></i> DNS
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-users">
+            <i class="bi bi-person-badge"></i> Users
+        </button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tab-tech">
+            <i class="bi bi-cpu"></i> Tech
+        </button>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade show active" id="tab-spider">
+        <div class="card bg-secondary-subtle border-secondary">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>URL</th>
+                            <th>Title</th>
+                            <th>Depth</th>
+                            <th>Status</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="spider-body">
+                        <tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="tab-dns">
+        <div class="card bg-secondary-subtle border-secondary">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Host</th>
+                            <th>Value</th>
+                            <th>TTL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dns-body">
+                        <tr><td colspan="4" class="text-center text-muted">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="tab-users">
+        <div class="card bg-secondary-subtle border-secondary">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Username</th>
+                            <th>URL</th>
+                            <th>Status</th>
+                            <th>Found</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-body">
+                        <tr><td colspan="5" class="text-center text-muted">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="tab-tech">
+        <div class="card bg-secondary-subtle border-secondary">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tech-body">
+                        <tr><td colspan="4" class="text-center text-muted">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const scanId = {{ scan.id }};
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function loadResults() {
+    fetch(`/api/scan/${scanId}/results`)
+        .then(r => r.json())
+        .then(data => {
+            // Status
+            const status = data.scan.status;
+            let badge = '';
+            if (status === 'completed') {
+                badge = '<span class="badge bg-success">Completed</span>';
+                document.getElementById('progress').style.display = 'none';
+            } else if (status === 'running') {
+                badge = '<span class="badge bg-info">Running</span>';
+                document.getElementById('progress').style.display = 'block';
+                setTimeout(loadResults, 2000);
+            } else if (status === 'failed') {
+                badge = '<span class="badge bg-danger">Failed</span>';
+                document.getElementById('progress').style.display = 'none';
+            } else {
+                badge = '<span class="badge bg-warning text-dark">Pending</span>';
+                document.getElementById('progress').style.display = 'block';
+                setTimeout(loadResults, 2000);
+            }
+            document.getElementById('status-badge').innerHTML = badge;
+            if (data.scan.duration) {
+                document.getElementById('duration-info').textContent = `Duration: ${data.scan.duration.toFixed(2)}s`;
+            }
+
+            // Spider
+            const spiderBody = document.getElementById('spider-body');
+            if (data.spider.length === 0) {
+                spiderBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No results</td></tr>';
+            } else {
+                spiderBody.innerHTML = data.spider.map(r => `
+                    <tr>
+                        <td><a href="${escapeHtml(r.url)}" target="_blank" class="text-info text-decoration-none">${escapeHtml(r.url.substring(0, 80))}</a></td>
+                        <td>${escapeHtml(r.title) || '<em class="text-muted">-</em>'}</td>
+                        <td><span class="badge bg-secondary">${r.depth}</span></td>
+                        <td>${r.status ? `<span class="badge bg-${r.status < 400 ? 'success' : 'danger'}">${r.status}</span>` : '<span class="text-muted">-</span>'}</td>
+                        <td><small>${escapeHtml(r.type ? r.type.split(';')[0] : '-')}</small></td>
+                    </tr>
+                `).join('');
+            }
+
+            // DNS
+            const dnsBody = document.getElementById('dns-body');
+            if (data.dns.length === 0) {
+                dnsBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No results</td></tr>';
+            } else {
+                dnsBody.innerHTML = data.dns.map(r => `
+                    <tr>
+                        <td><span class="badge bg-primary">${escapeHtml(r.type)}</span></td>
+                        <td><code>${escapeHtml(r.host)}</code></td>
+                        <td><code class="text-success">${escapeHtml(r.value)}</code></td>
+                        <td>${r.ttl || '-'}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Users
+            const usersBody = document.getElementById('users-body');
+            if (data.users.length === 0) {
+                usersBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No results</td></tr>';
+            } else {
+                usersBody.innerHTML = data.users.map(r => `
+                    <tr>
+                        <td><strong>${escapeHtml(r.platform)}</strong></td>
+                        <td><code>${escapeHtml(r.username)}</code></td>
+                        <td><a href="${escapeHtml(r.url)}" target="_blank" class="text-info">${escapeHtml(r.url.substring(0, 60))}</a></td>
+                        <td>${r.status_code || '-'}</td>
+                        <td>${r.found ? '<span class="badge bg-success"><i class="bi bi-check"></i> Found</span>' : '<span class="badge bg-secondary">Not found</span>'}</td>
+                    </tr>
+                `).join('');
+            }
+
+            // Tech
+            const techBody = document.getElementById('tech-body');
+            if (data.tech.length === 0) {
+                techBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No results</td></tr>';
+            } else {
+                techBody.innerHTML = data.tech.map(r => `
+                    <tr>
+                        <td><span class="badge bg-info">${escapeHtml(r.category)}</span></td>
+                        <td><strong>${escapeHtml(r.name)}</strong></td>
+                        <td>${escapeHtml(r.version) || '<em class="text-muted">-</em>'}</td>
+                        <td>
+                            <div class="progress" style="height: 6px; min-width: 80px;">
+                                <div class="progress-bar bg-success" style="width: ${r.confidence}%"></div>
+                            </div>
+                            <small>${r.confidence}%</small>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            setTimeout(loadResults, 3000);
+        });
+}
+
+loadResults();
+</script>
+{% endblock %}
