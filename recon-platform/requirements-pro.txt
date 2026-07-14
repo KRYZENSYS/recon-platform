@@ -1,0 +1,73 @@
+# Production requirements - all-in-one
+flask==3.0.3
+flask-sqlalchemy==3.1.1
+flask-migrate==4.0.7
+flask-login==0.6.3
+flask-limiter==3.8.0
+flask-cors==4.0.1
+flask-wtf==1.2.1
+flask-talisman==1.1.0
+flask-caching==2.3.0
+flask-socketio==5.3.7
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10
+alembic==1.14.0
+redis==5.2.0
+celery==5.4.0
+python-dotenv==1.0.1
+gunicorn==23.0.0
+gevent==24.10.3
+gunicorn[gevent]==23.0.0
+
+# Auth & Security
+bcrypt==4.2.1
+pyjwt==2.10.0
+pyotp==2.9.0
+qrcode[pil]==8.0
+cryptography==44.0.0
+argon2-cffi==23.1.0
+
+# Recon
+requests==2.32.3
+beautifulsoup4==4.12.3
+dnspython==2.7.0
+python-whois==1.0.0
+ssl-checker==0.0.4
+pyOpenSSL==24.3.0
+cryptography==44.0.0
+shodan==1.31.0
+censys==2.2.10
+
+# Async
+aiohttp==3.11.10
+asyncio-throttle==1.0.2
+
+# WebSocket
+python-socketio==5.12.0
+eventlet==0.36.1
+gevent-websocket==0.10.1
+
+# AI
+groq==0.11.0
+openai==1.59.0
+anthropic==0.39.0
+
+# Validation
+pydantic==2.10.3
+email-validator==2.2.0
+phonenumbers==8.13.49
+
+# Background tasks
+flower==2.0.1
+
+# Monitoring
+sentry-sdk[flask]==2.19.2
+prometheus-client==0.21.1
+structlog==24.4.0
+
+# PDF Reports
+reportlab==4.2.5
+weasyprint==63.1
+
+# Image processing
+Pillow==11.0.0
