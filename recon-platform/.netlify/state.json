@@ -1,5 +1,1 @@
-{
-  "buildId": "kryzensys-recon-platform",
-  "skipPythonInstall": true,
-  "useNodeOnly": true
-}
+{"SKIP_PYTHON":true,"DISABLE_MISE":true,"PYTHON_VERSION":""}
