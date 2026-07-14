@@ -1,0 +1,31 @@
+{
+  "admin": {
+    "name": "Firdavs (FirdavsVIP)",
+    "role": "Founder & Lead Developer",
+    "organization": "KRYZENSYS",
+    "email": "f91186645@gmail.com",
+    "telegram": {
+      "username": "FirdavsVIP",
+      "url": "https://t.me/FirdavsVIP",
+      "display": "@FirdavsVIP"
+    },
+    "github": {
+      "username": "KRYZENSYS",
+      "url": "https://github.com/KRYZENSYS/",
+      "display": "github.com/KRYZENSYS"
+    }
+  },
+  "support": {
+    "email": "f91186645@gmail.com",
+    "telegram": "https://t.me/FirdavsVIP",
+    "github_issues": "https://github.com/KRYZENSYS/recon-platform/issues",
+    "response_time": "24 hours",
+    "available_languages": ["uz", "ru", "en"]
+  },
+  "company": {
+    "name": "KRYZENSYS",
+    "tagline": "Professional Security Solutions",
+    "website": "https://recon.kryzensys.com",
+    "support_email": "f91186645@gmail.com"
+  }
+}
