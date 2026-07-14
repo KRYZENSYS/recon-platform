@@ -1,0 +1,79 @@
+# Netlify configuration for KRYZENSYS Recon Platform
+
+[build]
+  base = "recon-platform/frontend"
+  publish = "."
+  command = "echo 'Static frontend - no build needed'"
+
+[build.environment]
+  NODE_VERSION = "20.11.0"
+  PYTHON_VERSION = "3.11.0"
+  MISE_PYTHON_COMPILE = "false"
+
+# Use Python 3.11 via Netlify's default (no mise)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# PWA cache
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Service-Worker-Allowed = "/"
+
+[[headers]]
+  for = "/manifest.json"
+  [headers.values]
+    Content-Type = "application/manifest+json"
+
+# Long cache for static assets
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# SPA fallback for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API proxy to backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://recon-api.kryzensys.com/api/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-Forwarded-Host = "recon.kryzensys.com"
+
+# WebSocket proxy
+[[redirects]]
+  from = "/ws/*"
+  to = "wss://recon-api.kryzensys.com/ws/:splat"
+  status = 200
+  force = true
+
+[dev]
+  framework = "static"
+  command = "npx serve ."
+  targetPort = 3000
+  port = 8888
+  publish = "."
+
+[functions."api"]
+  path = "/api/v1/*"
+
+# Bypass mise for Python - use Netlify's built-in Python
+[[build.processing]]
+  skip_processing = false
