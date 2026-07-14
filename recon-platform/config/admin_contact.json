@@ -1,0 +1,34 @@
+{
+  "admin": {
+    "name": "Firdavs",
+    "handle": "FirdavsVIP",
+    "email": "f91186645@gmail.com",
+    "telegram": {
+      "username": "FirdavsVIP",
+      "url": "https://t.me/FirdavsVIP"
+    },
+    "github": {
+      "username": "KRYZENSYS",
+      "url": "https://github.com/KRYZENSYS/"
+    },
+    "organization": "KRYZENSYS",
+    "role": "Founder & Lead Developer",
+    "support": {
+      "email": "f91186645@gmail.com",
+      "telegram": "@FirdavsVIP",
+      "response_time_hours": 24,
+      "languages": ["uz", "ru", "en"]
+    },
+    "social": {
+      "github": "https://github.com/KRYZENSYS/",
+      "telegram": "https://t.me/FirdavsVIP",
+      "email": "mailto:f91186645@gmail.com"
+    }
+  },
+  "company": {
+    "name": "KRYZENSYS",
+    "tagline": "Professional Security Solutions",
+    "website": "https://recon.kryzensys.com",
+    "support_email": "f91186645@gmail.com"
+  }
+}
