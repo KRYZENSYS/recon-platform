@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+venv/
+env/
+ENV/
+.python-version
+.mise.toml
+runtime.txt
+.python-version
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnpm-store/
+.netlify/
+.netlify-build/
+.netlify-state.json
+.netlify/publish/
+netlify/functions/
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Build
+dist/
+build/
+*.log
+
+# Cache
+.cache/
+.mise/
+
+# OS
+Thumbs.db
