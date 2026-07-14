@@ -1,21 +1,23 @@
 # Netlify configuration for KRYZENSYS Recon Platform
+# FRONTEND ONLY - No Python, No Mise
 
 [build]
   base = "recon-platform/frontend"
   publish = "."
-  command = "echo 'Static frontend - no build needed'"
+  command = "echo '✅ Static frontend ready' && exit 0"
+  edge_functions = false
+  functions = false
 
 [build.environment]
   NODE_VERSION = "20.11.0"
-  PYTHON_VERSION = "3.11.0"
+  NPM_FLAGS = "--version"
+  PYTHON_VERSION = ""
   MISE_PYTHON_COMPILE = "false"
+  MISE_PYTHON_PRECOMPILED = "true"
+  SKIP_PYTHON_INSTALL = "true"
+  DISABLE_MISE_PYTHON = "true"
 
-# Use Python 3.11 via Netlify's default (no mise)
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-
-# Headers for security
+# Security headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -24,7 +26,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
-# PWA cache
+# PWA service worker
 [[headers]]
   for = "/sw.js"
   [headers.values]
@@ -42,7 +44,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# SPA fallback for client-side routing
+# SPA fallback
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -54,8 +56,6 @@
   to = "https://recon-api.kryzensys.com/api/:splat"
   status = 200
   force = true
-  [redirects.headers]
-    X-Forwarded-Host = "recon.kryzensys.com"
 
 # WebSocket proxy
 [[redirects]]
@@ -66,14 +66,16 @@
 
 [dev]
   framework = "static"
-  command = "npx serve ."
+  command = "npx serve . -l 3000"
   targetPort = 3000
   port = 8888
   publish = "."
 
-[functions."api"]
-  path = "/api/v1/*"
+# Ignore Python/Mise completely
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
-# Bypass mise for Python - use Netlify's built-in Python
-[[build.processing]]
+# Skip everything Python-related
+[build.processing]
   skip_processing = false
