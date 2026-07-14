@@ -1,0 +1,5 @@
+{
+  "buildId": "kryzensys-recon-platform",
+  "skipPythonInstall": true,
+  "useNodeOnly": true
+}
