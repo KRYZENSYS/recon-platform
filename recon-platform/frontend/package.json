@@ -1,0 +1,24 @@
+{
+  "name": "kryzensys-recon-frontend",
+  "version": "2.0.0",
+  "description": "KRYZENSYS Recon Platform - Frontend",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site - no build step' && exit 0",
+    "dev": "npx serve . -l 3000",
+    "start": "npx serve . -l 3000",
+    "clean": "rm -rf node_modules .netlify"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "security",
+    "recon",
+    "kryzensys",
+    "platform"
+  ],
+  "author": "Firdavs (FirdavsVIP) <f91186645@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/KRYZENSYS/recon-platform"
+}
