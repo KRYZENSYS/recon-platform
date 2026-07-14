@@ -1,25 +1,54 @@
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
+  external_labels:
+    cluster: 'recon-platform'
+    environment: 'production'
 
 scrape_configs:
-  - job_name: "recon-api"
+  - job_name: 'recon-api'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
     static_configs:
-      - targets: ["api:5000"]
-    metrics_path: /metrics
+      - targets: ['api:5000']
+        labels: { service: 'api', tier: 'backend' }
 
-  - job_name: "nginx"
+  - job_name: 'recon-worker'
+    metrics_path: '/metrics'
     static_configs:
-      - targets: ["nginx:80"]
+      - targets: ['worker:5000']
+        labels: { service: 'worker', tier: 'backend' }
 
-  - job_name: "postgres"
+  - job_name: 'node-exporter'
     static_configs:
-      - targets: ["postgres-exporter:9187"]
+      - targets: ['node-exporter:9100']
+        labels: { service: 'system', tier: 'infrastructure' }
 
-  - job_name: "redis"
+  - job_name: 'postgres'
     static_configs:
-      - targets: ["redis-exporter:9121"]
+      - targets: ['postgres-exporter:9187']
+        labels: { service: 'database', tier: 'data' }
 
-  - job_name: "node"
+  - job_name: 'redis'
     static_configs:
-      - targets: ["node-exporter:9100"]
+      - targets: ['redis-exporter:9121']
+        labels: { service: 'cache', tier: 'data' }
+
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+        labels: { service: 'proxy', tier: 'frontend' }
+
+  - job_name: 'flower'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['flower:5555']
+        labels: { service: 'celery-monitoring', tier: 'backend' }
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - '/etc/prometheus/alerts/*.yml'
