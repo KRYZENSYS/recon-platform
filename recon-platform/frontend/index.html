@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🛡️ KRYZENSYS Recon Platform</title>
+  <meta name="description" content="Professional Security Reconnaissance Platform by KRYZENSYS - FirdavsVIP" />
+  <link rel="manifest" href="/pwa/manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: white;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden">
+  <!-- Hero Section -->
+  <div class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-4xl w-full text-center">
+      <div class="text-6xl mb-6">🛡️</div>
+      <h1 class="text-5xl md:text-7xl font-bold gradient-text mb-4">KRYZENSYS</h1>
+      <h2 class="text-2xl md:text-3xl text-slate-300 mb-8">Recon Platform</h2>
+      <p class="text-lg text-slate-400 mb-12 max-w-2xl mx-auto">
+        Professional Security Reconnaissance Platform
+        <br />
+        <span class="text-sm text-slate-500">AI/ML · 102 Lab Tools · 11 Languages · 8 Themes</span>
+      </p>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+        <div class="glass rounded-2xl p-4">
+          <div class="text-3xl font-bold text-indigo-400">102</div>
+          <div class="text-xs text-slate-400">Lab Tools</div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-3xl font-bold text-purple-400">80+</div>
+          <div class="text-xs text-slate-400">Endpoints</div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-3xl font-bold text-pink-400">11</div>
+          <div class="text-xs text-slate-400">Languages</div>
+        </div>
+        <div class="glass rounded-2xl p-4">
+          <div class="text-3xl font-bold text-blue-400">8</div>
+          <div class="text-xs text-slate-400">Themes</div>
+        </div>
+      </div>
+
+      <!-- Admin Panel Button -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <a href="/admin/" class="glass hover:bg-white/10 border border-indigo-500/30 hover:border-indigo-500 rounded-2xl p-6 transition-all hover:scale-105 inline-block">
+          <div class="text-4xl mb-2">🔐</div>
+          <div class="font-bold text-lg">Admin Panel</div>
+          <div class="text-xs text-slate-400 mt-1">Superadmin Dashboard</div>
+        </a>
+        <a href="/pwa/manifest.json" class="glass hover:bg-white/10 border border-purple-500/30 hover:border-purple-500 rounded-2xl p-6 transition-all hover:scale-105 inline-block">
+          <div class="text-4xl mb-2">📱</div>
+          <div class="font-bold text-lg">PWA Install</div>
+          <div class="text-xs text-slate-400 mt-1">Mobile App</div>
+        </a>
+      </div>
+
+      <!-- Admin Contact -->
+      <div class="glass rounded-2xl p-6 max-w-2xl mx-auto">
+        <div class="text-sm text-slate-400 uppercase tracking-wider mb-4">👨‍💻 Administrator</div>
+        <div class="text-xl font-bold mb-2">Firdavs (FirdavsVIP)</div>
+        <div class="text-sm text-slate-400 mb-4">Founder & Lead Developer · KRYZENSYS</div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <a href="mailto:f91186645@gmail.com" class="glass hover:bg-white/10 rounded-xl p-3 transition">
+            <div class="text-2xl mb-1">📧</div>
+            <div class="text-xs text-slate-400">Email</div>
+            <div class="text-sm font-semibold break-all">f91186645@gmail.com</div>
+          </a>
+          <a href="https://github.com/KRYZENSYS/" target="_blank" class="glass hover:bg-white/10 rounded-xl p-3 transition">
+            <div class="text-2xl mb-1">💻</div>
+            <div class="text-xs text-slate-400">GitHub</div>
+            <div class="text-sm font-semibold">github.com/KRYZENSYS</div>
+          </a>
+          <a href="https://t.me/FirdavsVIP" target="_blank" class="glass hover:bg-white/10 rounded-xl p-3 transition">
+            <div class="text-2xl mb-1">📱</div>
+            <div class="text-xs text-slate-400">Telegram</div>
+            <div class="text-sm font-semibold">@FirdavsVIP</div>
+          </a>
+        </div>
+
+        <div class="mt-4 flex items-center justify-center gap-2 text-xs text-slate-400">
+          <span class="w-2 h-2 bg-green-400 rounded-full pulse"></span>
+          <span>Online · 24 soat ichida javob</span>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">🤖</div>
+          <div class="font-bold mb-1">AI/ML Anomaly Detection</div>
+          <div class="text-xs text-slate-400">IsolationForest bilan avtomatik anomaliya aniqlash</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">🔍</div>
+          <div class="font-bold mb-1">Shodan & Censys</div>
+          <div class="text-xs text-slate-400">To'liq OSINT integration</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">📄</div>
+          <div class="font-bold mb-1">PDF Reports</div>
+          <div class="text-xs text-slate-400">Professional hisobotlar (ReportLab)</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">💳</div>
+          <div class="font-bold mb-1">Stripe Payments</div>
+          <div class="text-xs text-slate-400">4 ta plan (Free, Pro, Business, Enterprise)</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">📧</div>
+          <div class="font-bold mb-1">Email Service</div>
+          <div class="text-xs text-slate-400">SendGrid, SES, Mailgun, SMTP</div>
+        </div>
+        <div class="glass rounded-2xl p-5">
+          <div class="text-2xl mb-2">🛡️</div>
+          <div class="font-bold mb-1">Compliance</div>
+          <div class="text-xs text-slate-400">SOC2, GDPR, HIPAA, PCI-DSS, ISO27001</div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-12 text-xs text-slate-500">
+        <p>Made with ❤️ by <a href="https://github.com/KRYZENSYS/" class="text-indigo-400 hover:underline">FirdavsVIP @ KRYZENSYS</a></p>
+        <p class="mt-2">MIT License · 2026</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+  </script>
+</body>
+</html>
