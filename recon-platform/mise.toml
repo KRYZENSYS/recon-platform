@@ -1,18 +1,3 @@
-# mise configuration for KRYZENSYS Recon Platform
-# Use stable Python versions available on Netlify
-
+# Empty mise config - Netlify should not use Python
 [env]
-PYTHON_VERSION = "3.11.0"
-NODE_VERSION = "20.11.0"
-
-[settings]
-# Disable Python compile (use precompiled only)
-python.compile = false
-# Use precompiled python only
-python.precompiled = true
-# Experimental features
-experimental = true
-
-[tools]
-python = "3.11.0"
-node = "20.11.0"
+NODE_VERSION = "20"
