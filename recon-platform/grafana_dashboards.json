@@ -1,0 +1,143 @@
+{
+  "annotations": {"list": [{"builtIn": 1, "datasource": {"type": "grafana", "uid": "-- Grafana --"}, "enable": true, "hide": true, "iconColor": "rgba(0, 211, 255, 1)", "name": "Annotations & Alerts", "type": "dashboard"}]},
+  "description": "Recon Platform - Complete monitoring dashboard",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "id": 1,
+      "title": "📊 System Overview",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 24, "x": 0, "y": 0},
+      "targets": [{"expr": "up{job='recon-api'}", "refId": "A"}],
+      "fieldConfig": {"defaults": {"color": {"mode": "thresholds"}, "thresholds": {"mode": "absolute", "steps": [{"color": "red", "value": null}, {"color": "green", "value": 1}]}}}
+    },
+    {
+      "id": 2,
+      "title": "💻 CPU Usage",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 4},
+      "targets": [{"expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode='idle'}[5m])) * 100)", "refId": "A", "legendFormat": "{{instance}}"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "max": 100, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 70}, {"color": "red", "value": 90}]}}}
+    },
+    {
+      "id": 3,
+      "title": "🧠 Memory Usage",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 4},
+      "targets": [{"expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100", "refId": "A", "legendFormat": "{{instance}}"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "max": 100, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 75}, {"color": "red", "value": 90}]}}}
+    },
+    {
+      "id": 4,
+      "title": "💾 Disk Usage",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 4},
+      "targets": [{"expr": "(1 - (node_filesystem_avail_bytes{fstype!='tmpfs'} / node_filesystem_size_bytes{fstype!='tmpfs'})) * 100", "refId": "A", "legendFormat": "{{instance}}:{{mountpoint}}"}],
+      "fieldConfig": {"defaults": {"unit": "percent", "max": 100, "thresholds": {"mode": "absolute", "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 75}, {"color": "red", "value": 90}]}}}
+    },
+    {
+      "id": 5,
+      "title": "🌐 HTTP Requests/sec",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12},
+      "targets": [{"expr": "sum(rate(http_requests_total[5m])) by (status)", "refId": "A", "legendFormat": "{{status}}"}]
+    },
+    {
+      "id": 6,
+      "title": "⏱️ Response Time (p95)",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12},
+      "targets": [{"expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket[5m])) by (le, endpoint))", "refId": "A", "legendFormat": "{{endpoint}}"}],
+      "fieldConfig": {"defaults": {"unit": "s"}}
+    },
+    {
+      "id": 7,
+      "title": "🔍 Scans Started (24h)",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 20},
+      "targets": [{"expr": "increase(scans_total[24h])", "refId": "A"}]
+    },
+    {
+      "id": 8,
+      "title": "✅ Scans Completed (24h)",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 20},
+      "targets": [{"expr": "increase(scans_completed_total[24h])", "refId": "A"}]
+    },
+    {
+      "id": 9,
+      "title": "❌ Scans Failed (24h)",
+      "type": "stat",
+      "gridPos": {"h": 4, "w": 6, "x": 12, "y": 20},
+      "targets": [{"expr": "increase(scans_failed_total[24h])", "refId": "A"}]
+    },
+    {
+      "id": 10,
+      "title": "⚠️ Findings by Severity",
+      "type": "barchart",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 24},
+      "targets": [{"expr": "sum by (severity) (increase(findings_total[24h]))", "refId": "A", "legendFormat": "{{severity}}", "format": "time_series"}],
+      "options": {"orientation": "horizontal", "showValue": true}
+    },
+    {
+      "id": 11,
+      "title": "👥 Active Users (5m)",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 12, "y": 24},
+      "targets": [{"expr": "count(count by (user_id) (rate(user_actions_total[5m])))", "refId": "A"}]
+    },
+    {
+      "id": 12,
+      "title": "💰 Revenue (30d)",
+      "type": "stat",
+      "gridPos": {"h": 8, "w": 6, "x": 18, "y": 24},
+      "targets": [{"expr": "sum(increase(payments_amount_total[30d]))", "refId": "A"}],
+      "fieldConfig": {"defaults": {"unit": "currencyUSD"}}
+    },
+    {
+      "id": 13,
+      "title": "📊 Active WebSocket Connections",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 32},
+      "targets": [{"expr": "websocket_connections_active", "refId": "A"}]
+    },
+    {
+      "id": 14,
+      "title": "🔐 Auth Events",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 32},
+      "targets": [{"expr": "sum(rate(auth_events_total[5m])) by (event_type)", "refId": "A", "legendFormat": "{{event_type}}"}]
+    },
+    {
+      "id": 15,
+      "title": "🐰 Celery Queue Length",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 40},
+      "targets": [{"expr": "celery_queue_length", "refId": "A", "legendFormat": "{{queue}}"}]
+    },
+    {
+      "id": 16,
+      "title": "💾 Redis Memory",
+      "type": "timeseries",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 40},
+      "targets": [{"expr": "redis_memory_used_bytes", "refId": "A"}],
+      "fieldConfig": {"defaults": {"unit": "bytes"}}
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 38,
+  "tags": ["recon", "security", "platform"],
+  "templating": {"list": []},
+  "time": {"from": "now-6h", "to": "now"},
+  "timepicker": {},
+  "timezone": "",
+  "title": "🛡️ Recon Platform - Complete Monitoring",
+  "uid": "recon-platform-main",
+  "version": 1,
+  "weekStart": ""
+}
